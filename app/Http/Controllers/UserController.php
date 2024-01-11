@@ -28,7 +28,7 @@ class UserController extends Controller
             return response()->json($responseData, 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return response()->json(['error' => 'An unexpected error occurred'], 500);
+            return response()->json(['success' => false, 'error' => "An unexpected error occurred"], 500);
         }
     }
 
@@ -94,6 +94,12 @@ class UserController extends Controller
                 $imageName = 'user_' . $user->id . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $imageName);
                 $user->img = 'images/' . $imageName;
+
+                //Delete Old User Img
+                /*
+                if (file_exists(public_path($user->getOriginal('img')))) {
+                    unlink(public_path($user->getOriginal('img')));
+                }*/
             }
 
             $user->save();
