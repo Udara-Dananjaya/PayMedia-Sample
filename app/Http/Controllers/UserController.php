@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -101,6 +101,8 @@ class UserController extends Controller
             return response()->json(['success' => true, 'data' => ['user' => $user]], 200);
         } catch (ValidationException $e) {
             return response()->json(['success' => false, 'error' => $e->errors()], 422);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'error' => "User Not Found"], 404);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
