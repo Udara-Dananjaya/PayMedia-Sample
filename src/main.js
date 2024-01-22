@@ -11,6 +11,8 @@ import './css/styles.css';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import Vuex from 'vuex';
+
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +33,7 @@ Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 Vue.config.productionTip = false;
+Vue.use(Vuex);
 
 new Vue({
   router,

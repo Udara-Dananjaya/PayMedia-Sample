@@ -21,7 +21,7 @@
           </td>
           <td>
             <button @click="editUser(user)">Edit</button>
-            <button @click="deleteUser(user.id)">Delete</button>
+            <button @click="openDeleteConfirmation(user.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -67,6 +67,21 @@ export default {
     this.fetchUserData();
   },
   methods: {
+    openDeleteConfirmation() {
+
+      this.$buefy.dialog.confirm({
+        title: "Deleting account",
+        message: "Are you sure you want to delete this account?",
+        confirmText: "Delete",
+        type: "is-danger",
+        hasIcon: true,
+        icon: 'times-circle',
+        iconPack: 'fa',
+        ariaRole: 'alertdialog',
+        onConfirm: this.deleteUser,
+        onCancel: this.resetDeleteUserId,
+      });
+    },
     async fetchUserData() {
       try {
         const response = await NetworkManager.apiRequest("list", {}, true, "application/json");
@@ -81,31 +96,16 @@ export default {
     },
     async deleteUser(userId) {
       try {
-        const result = await this.$swal({
-          title: "Are you sure?",
-          text: "Once deleted, you will not be able to recover this user!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel",
-        });
-
-        if (result.isConfirmed) {
-          await NetworkManager.apiRequest(
+        
+        await NetworkManager.apiRequest(
             `delete/${userId}`,
             {},
             true,
             "application/json"
           );
           this.users = this.users.filter((user) => user.id !== userId);
-
-          await this.$swal("Deleted!", "The user has been deleted.", "success");
-        } else {
-          await this.$swal("Cancelled", "Your user is safe!", "info");
-        }
       } catch (error) {
         console.error("Error deleting user:", error);
-        await this.$swal("Error", "An error occurred while deleting the user.", "error");
       }
     },
     editUser(user) {

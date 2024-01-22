@@ -59,19 +59,9 @@
 import '@/helpers/validators/validator.js'
 import NetworkManager from "@/network";
 
-import { useAuthStore } from "@/store/authStore";
 
 export default {
-  setup(){
-    const authStore = useAuthStore()
-
-// Log the state properties when the component is mounted
-console.log("Token:", authStore.token);
-console.log("Is Token Refreshing:", authStore.isTokenRefreshing);
-console.log("WebRTC Internal Link:", authStore.webRTCInternalLink);
-// ... log other properties as needed
-    return {authStore}
-  },
+ 
 
   data: () => ({
     email: "",
@@ -106,10 +96,8 @@ console.log("WebRTC Internal Link:", authStore.webRTCInternalLink);
         const response = await NetworkManager.apiRequest(`login`, dataObject, "application/json");
 
         if (response.success) {
-         this.authStore.token = response.token;
 
           //this.$store.dispatch('auth/setAuthToken', response.data.token);
-          //console.log("Is Token Refreshing:", authStore.isTokenRefreshing);
       
           this.$store.dispatch('auth/setAuthToken', response.token);
           this.$router.push('/home');
