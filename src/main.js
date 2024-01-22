@@ -1,28 +1,39 @@
-// Importing Vue library and required components and plugins
-import Vue from 'vue'
-import App from './App.vue' // Importing the main App component
-import router from './router' // Importing Vue Router for navigation
-import store from './store' // Importing Vuex store for state management
-import Buefy from 'buefy' // Importing Buefy for UI components
-import 'buefy/dist/buefy.css' // Importing Buefy styles
-import { ValidationObserver, ValidationProvider } from 'vee-validate'; // Importing VeeValidate for form validation
+// Import Font Awesome styles
+import 'font-awesome/css/font-awesome.css';
 
-// Importing custom CSS files
-import './css/styles.css'
+import Vue from 'vue';
+import { createPinia } from 'pinia';
+import Buefy from 'buefy';
+import 'buefy/dist/buefy.css';
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import './css/styles.css';
 
-// Configuring Vue to not show production tip in the console
-Vue.config.productionTip = false
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
-// Using Buefy as a Vue plugin
-Vue.use(Buefy)
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-// Registering VeeValidate components globally
-Vue.component("ValidationProvider", ValidationProvider);
-Vue.component("ValidationObserver", ValidationObserver);
+library.add(fas);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-// Creating a new Vue instance
+const pinia = createPinia();
+Vue.use(pinia);
+
+// Use Buefy with defaultIconPack set to 'fa'
+Vue.use(Buefy, {
+  defaultIconPack: 'fa',
+});
+
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
+
+Vue.config.productionTip = false;
+
 new Vue({
-  router, // Using the imported router for navigation
-  store, // Using the imported Vuex store for state management
-  render: h => h(App) // Rendering the main App component
-}).$mount('#app') // Mounting the Vue instance to the '#app' element in the HTML
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount('#app');
