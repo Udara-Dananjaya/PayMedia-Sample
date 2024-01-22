@@ -27,6 +27,7 @@ Route::group([],function (){
  });
 
  //Authenticate and Authorize With JSON Web Token
+ //Route::group([],function (){
 Route::middleware(['auth:api'])->group(function () {
     Route::post('checkToken', [AuthController::class, 'checkToken']);
     Route::post('logout', [AuthController::class, 'logout']);
