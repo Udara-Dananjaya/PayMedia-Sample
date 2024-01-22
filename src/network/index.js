@@ -9,7 +9,7 @@ class NetworkResponse {
 }
 
 class NetworkManager {
-  static async apiRequest(url, data, contentType = "application/json") {
+  static async apiRequest(url, data, withToken = true, contentType = "application/json") {
     // Construct the full URL
     const URL = `${appSettings.$api_url}/${url}`;
 
@@ -20,6 +20,14 @@ class NetworkManager {
       },
       timeout: appSettings.timeoutDuration,
     };
+
+    // Include Authorization header if withToken is true
+    if (withToken) {
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) {
+        config.headers.Authorization = `Bearer ${authToken}`;
+      }
+    }
 
     // Set Content-Type header
     config.headers["Content-Type"] = contentType;

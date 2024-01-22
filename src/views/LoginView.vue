@@ -110,7 +110,8 @@ console.log("WebRTC Internal Link:", authStore.webRTCInternalLink);
 
           //this.$store.dispatch('auth/setAuthToken', response.data.token);
           //console.log("Is Token Refreshing:", authStore.isTokenRefreshing);
-          this.authStore.isTokenRefreshing=true;
+      
+          this.$store.dispatch('auth/setAuthToken', response.token);
           this.$router.push('/home');
         } else {
           this.alertCustom("Error",'Invalid credentials. Please try again.');
@@ -122,6 +123,7 @@ console.log("WebRTC Internal Link:", authStore.webRTCInternalLink);
           password: ''
         };
       } catch (error) {
+        console.log(error);
         this.alertCustom("Error",'An error occurred during login. Please try again.', 'Retry');
       }
 

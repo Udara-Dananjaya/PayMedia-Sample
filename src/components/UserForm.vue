@@ -1,34 +1,106 @@
-<!-- components/UserForm.vue -->
 <template>
-  <div class="modal">
-    <h2>{{ isEditing ? 'Edit User' : 'Add New User' }}</h2>
-    <form @submit.prevent="isEditing ? updateUser() : addUser()">
-      <label for="name">{{ isEditing ? 'Edit' : 'Add' }} Name:</label>
-      <input type="text" id="name" v-model="localUserData.name" required>
+  <div class="login-page">
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <!-- <div class="column is-half"> .// -->
+          <div class="card">
+            <div class="login-card-content">
+              <h1 class="title is-2">Login</h1>
+              <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
 
-      <label for="email">{{ isEditing ? 'Edit' : 'Add' }} Email:</label>
-      <input type="email" id="email" v-model="localUserData.email" required>
+                <div class="field">
+                  <div class="control">
+                    <ValidationProvider rules="required" name="Name" v-slot="{ errors, valid }">
+                      <div class="field">
+                        <label for="name" class="label">Name</label>
+                        <div class="control">
+                          <input id="name" type="text" class="input" v-model="localUserData.name" placeholder="Name" />
+                        </div>
+                        <p class="help" :class="{ 'is-danger': errors[0], 'is-success': valid }">
+                          {{ errors[0] }}
+                        </p>
+                      </div>
+                    </ValidationProvider>
+                  </div>
+                </div>
 
-      <label for="pass" v-if="!isEditing">Password:</label>
-      <input type="password" id="pass" v-model="localUserData.pass" v-if="!isEditing" required>
+                <div class="field">
+                  <div class="control">
+                    <ValidationProvider rules="required" name="Email" v-slot="{ errors, valid }">
+                      <div class="field">
+                        <label for="email" class="label">Email</label>
+                        <div class="control">
+                          <input id="email" type="text" class="input" v-model="localUserData.email" placeholder="Email" />
+                        </div>
+                        <p class="help" :class="{ 'is-danger': errors[0], 'is-success': valid }">
+                          {{ errors[0] }}
+                        </p>
+                      </div>
+                    </ValidationProvider>
+                  </div>
+                </div>
 
-      <label for="image">Image:</label>
-      <input type="file" accept="image/*" @change="handleFileChange" class="form-control-file" id="image">
+                <div class="field">
+                  <div class="control">
+                    <ValidationProvider rules="image" name="Image" v-slot="{ errors, valid }">
+                      <div class="field">
+                        <label for="image" class="label">Image</label>
+                        <div class="control">
+                          <input type="file" accept="image/*" @change="handleFileChange" class="form-control-file"
+                            id="image" />
+                        </div>
+                        <div class="border p-2 mt-3">
+                          <p>Preview Here:</p>
+                          <img :src="isEditingImg ? localUserData.img : imgurl" class="img-fluid" width="100px" />
+                        </div>
+                        <p class="help" :class="{ 'is-danger': errors[0], 'is-success': valid }">
+                          {{ errors[0] }}
+                        </p>
+                      </div>
+                    </ValidationProvider>
+                  </div>
+                </div>
+
+                <div class="field" v-if="!isEditing">
+                  <div class="control">
+                    <ValidationProvider rules="required" name="Password" v-slot="{ errors, valid }">
+                      <div class="field">
+                        <label for="password" class="label">Password</label>
+                        <div class="control">
+                          <input id="password" type="password" class="input" v-model="localUserData.password"
+                            placeholder="Password" />
+                        </div>
+                        <p class="help" :class="{ 'is-danger': errors[0], 'is-success': valid }">
+                          {{ errors[0] }}
+                        </p>
+                      </div>
+                    </ValidationProvider>
+                  </div>
+                </div>
 
 
-      <div class="border p-2 mt-3">
-        <p>Preview Here:</p>
-        <img :src="isEditingImg ? localUserData.img : imgurl" class="img-fluid" width="100px" />
+
+                <button class="button is-block is-primary is-fullwidth is-medium" @click="handleSubmit(submit)">
+                  <span> {{ isEditing ? 'Update User' : 'Add User' }}</span>
+                </button>
+
+
+                <br />
+                <small><em>Enter your login username and password</em></small>
+              </ValidationObserver>
+            </div>
+          </div>
+          <!-- </div> -->
+        </div>
       </div>
-
-      <button type="submit">{{ isEditing ? 'Update User' : 'Add User' }}</button>
-      <button type="button" @click="cancelForm">Cancel</button>
-
-    </form>
+    </section>
   </div>
 </template>
 
 <script>
+import '@/helpers/validators/validator.js'
+
 export default {
   props: {
     isEditing: Boolean,
@@ -36,9 +108,10 @@ export default {
   },
   data() {
     return {
-      localUserData: { ...this.userData},
-      isEditingImg:{...this.userData.img},
+      localUserData: { ...this.userData },
+      isEditingImg: { ...this.userData.img },
       imgurl: null, // Add imgurl to data
+      valid: false,
 
     };
   },
@@ -48,7 +121,7 @@ export default {
         const formData = new FormData();
         formData.append("name", this.localUserData.name);
         formData.append("email", this.localUserData.email);
-        formData.append("password", this.localUserData.pass);
+        formData.append("password", this.localUserData.password);
         if (this.localUserData.img) {
           formData.append("img", this.localUserData.img);
         }
@@ -87,7 +160,20 @@ export default {
       console.log('File changed:', file);
       this.localUserData.img = file;
       this.imgurl = URL.createObjectURL(file);
-      this.isEditingImg=false;
+      this.isEditingImg = false;
+    },
+    submit() {
+      if (this.$refs.observer.validate()) {
+        if (this.isEditing) {
+          this.updateUser();
+
+        } else {
+          this.addUser();
+        }
+
+      } else {
+        console.log("Form validation failed");
+      }
     },
   },
   watch: {
@@ -101,40 +187,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.modal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.modal h2 {
-  margin-bottom: 20px;
-}
-
-form {
-  margin-top: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input {
-  margin-bottom: 10px;
-}
-
-button {
-  margin-right: 5px;
-}
-</style>

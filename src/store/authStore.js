@@ -1,10 +1,6 @@
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("authStore", {
-  // Persist all state properties except 'token'
-  persist: {
-    exclude: ["token"], // Exclude 'token' from persistence
-  },
 
   state: () => ({
     token: "",
@@ -21,4 +17,20 @@ export const useAuthStore = defineStore("authStore", {
     maxSessionIdleTimeMins: 0,
     tempTime: 2,
   }),
+  actions: {
+    // Method to sync state with local storage
+    syncWithLocalStorage() {
+      const authState = JSON.stringify(this.$state);
+      localStorage.setItem("authState", authState);
+    },
+
+    // Method to load state from local storage
+    loadFromLocalStorage() {
+      const authState = localStorage.getItem("authState");
+      if (authState) {
+        const parsedState = JSON.parse(authState);
+        this.$state = parsedState;
+      }
+    },
+  },
 });
