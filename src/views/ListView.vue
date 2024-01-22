@@ -127,9 +127,7 @@ export default {
         onConfirm: this.deleteUser,
         onCancel: this.resetDeleteUserId,
       });
-    }
-
-    ,
+    },
     resetDeleteUserId() {
       this.deleteUserId = null;
     },
