@@ -73,7 +73,7 @@ export default {
         const response = await NetworkManager.apiRequest(`login`, dataObject);
 
         if (response.success) {
-          BuefyHelper.showSnackBar("Login Successfully");
+          BuefyHelper.showToastMessage("Login Successfully");
           this.$store.dispatch('auth/setAuthToken', response.token);
           this.$router.push('/');
         } else {
