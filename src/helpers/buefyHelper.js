@@ -34,14 +34,21 @@ const BuefyHelper = {
         });
     },
     showConfirmAlert(title, message, confirmText) {
-        Dialog.confirm({
-            title: title,
-            message: message,
-            confirmText: confirmText,
-            type: 'is-danger',
-            hasIcon: true,
-            onConfirm: () =>this.showToastMessage('Account deleted!')
-        })
+        return new Promise((resolve) => {
+            Dialog.confirm({
+                title: title,
+                message: message,
+                confirmText: confirmText,
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => {
+                    resolve(true);
+                },
+                onCancel: () => {
+                    resolve(false);
+                }
+            });
+        });
     },
 }
 
