@@ -24,14 +24,20 @@ const actions = {
     },
     async checkAuthStatus() {
         try {
-            const authToken = localStorage.getItem('authToken');
+            const authToken = state.authToken;
+
+            if (router.currentRoute.path === '/login') {
+                return Promise.resolve();
+            }
+
             if (!authToken) {
                 router.push('/login');
-                return Promise.reject('No authToken available');
             }
+
             const response = await NetworkManager.apiRequest('checkToken', 'application/json', '', true);
             console.log('Response:', response);
-            if (response.data && response.data.success) {
+
+            if (response && response.success) {
                 return Promise.resolve();
             } else {
                 if (response.data && response.data.message === 'Unauthenticated.') {
@@ -39,6 +45,7 @@ const actions = {
                 }
                 return Promise.reject('Authentication check failed');
             }
+
         } catch (error) {
             console.error('Error checking auth status:', error);
             return Promise.reject(error);
