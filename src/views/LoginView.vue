@@ -75,7 +75,7 @@ export default {
         if (response.success) {
           BuefyHelper.showSnackBar("Login Successfully");
           this.$store.dispatch('auth/setAuthToken', response.token);
-         // this.$router.push('/home');
+          this.$router.push('/');
         } else {
           BuefyHelper.showAlert("Error",'Invalid credentials. Please try again.');
         }
