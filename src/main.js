@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
+
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import VueCompositionAPI from '@vue/composition-api'
 import store from './store'
@@ -12,6 +14,9 @@ const pinia = createPinia()
 Vue.use(VueCompositionAPI)
 
 Vue.use(Buefy)
+
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 Vue.config.productionTip = false
 
