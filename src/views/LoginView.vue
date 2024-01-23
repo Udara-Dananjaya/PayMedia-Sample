@@ -1,10 +1,10 @@
 <template>
-  <div class="login-page">
+  <div class="login-container">
     <section class="section">
       <div class="container">
         <div class="columns is-centered">
           <div class="card">
-            <div class="login-card-content">
+            <div class="login-form-container">
               <h1 class="title is-2">Login</h1>
               <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
                 <div class="field">
@@ -41,7 +41,6 @@
                 <button class="button is-block is-primary is-fullwidth is-medium" @click="handleSubmit(submit)">
                   <span>Login</span>
                 </button>
-                
                 <br />
                 <small><em>Enter your login username and password</em></small>
               </ValidationObserver>
@@ -54,65 +53,37 @@
 </template>
 
 <script>
-import '@/helpers/validators'
+import '@/helpers/validators';
+import {BuefyHelper} from '@/helpers/buefyHelper';
+
 import NetworkManager from "@/network";
 
 
 export default {
  
-
   data: () => ({
     email: "",
     password: "",
-  }), 
-   mounted() {
-   
-  },
+  }),
   methods: {
-    alertCustom(title, message) {
-      this.$buefy.dialog.alert({
-        title: title,
-        message: message,
-        // confirmText: btn,
-        type: 'is-danger',
-                    hasIcon: true,
-                    icon: 'times-circle',
-                    iconPack: 'fa',
-                    ariaRole: 'alertdialog',
-                    ariaModal: true
-      });
-    },
+   
     async loginUser() {
-
-      const dataObject = {
-        email: this.email,
-        password: this.password
-      };
-
-
+      const dataObject = {email: this.email,password: this.password};
       try {
-        const response = await NetworkManager.apiRequest(`login`, dataObject, "application/json");
+        const response = await NetworkManager.apiRequest(`login`, dataObject);
 
         if (response.success) {
-
-          //this.$store.dispatch('auth/setAuthToken', response.data.token);
-      
+          BuefyHelper.showSnackBar("Login Successfully");
           this.$store.dispatch('auth/setAuthToken', response.token);
-          this.$router.push('/home');
+         // this.$router.push('/home');
         } else {
-          this.alertCustom("Error",'Invalid credentials. Please try again.');
-
+          BuefyHelper.showAlert("Error",'Invalid credentials. Please try again.');
         }
-
-        this.loginData = {
-          email: '',
-          password: ''
-        };
+        this.loginData = {email:null,password:null};
       } catch (error) {
         console.log(error);
-        this.alertCustom("Error",'An error occurred during login. Please try again.', 'Retry');
+        BuefyHelper.showAlert("Error",'An error occurred during login. Please try again.', 'Retry');
       }
-
     },
     submit() {
       if (this.$refs.observer.validate()) {
