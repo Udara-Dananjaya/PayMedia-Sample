@@ -34,7 +34,7 @@ const actions = {
                 router.push('/login');
             }
 
-            const response = await NetworkManager.apiRequest('checkToken',{}, 'application/json', true);
+            const response = await NetworkManager.apiRequest('checkToken', {}, 'application/json', true);
             console.log('Response:', response);
 
             if (response && response.success) {
