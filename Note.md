@@ -1,29 +1,49 @@
-# Install Vue CLI globally
-npm install -g vue-cli
+1. **Install Vue CLI Globally:**
+   ```bash
+   npm install -g @vue/cli
+   ```
 
-# Create a new Vue project
-vue init webpack sampleproject
+2. **Create a New Vue Project:**
+   ```bash
+   vue create sampleproject
+   ```
 
-# Navigate to the project directory
-cd sampleproject
+3. **Navigate to the Project Directory:**
+   ```bash
+   cd sampleproject
+   ```
 
-# Install project dependencies
-npm install
+4. **Serve the Project:**
+   ```bash
+   npm run serve
+   ```
 
-# Run the development server
-npm run dev
+5. **Add Vue Router for Routing:**
+   ```bash
+   vue add router
+   ```
 
-# Install vue-router
-npm install vue-router --save
+6. **Install Axios for HTTP Requests:**
+   ```bash
+   npm install axios
+   ```
 
-# Install Axios
-npm install axios --save
+7. **Add Buefy for UI Components:**
+   ```bash
+   vue add buefy
+   ```
 
-# Install Buefy for UI components
-npm install buefy --save
+8. **Install VeeValidate version 3 for Form Validation:**
+   ```bash
+   npm install vee-validate@3 --save
+   ```
 
-# Install VeeValidate version 2
-npm install vee-validate@2 --save
+9. **Add Pinia for State Management:**
+   ```bash
+   vue add pinia
+   ```
 
-# Install Vuex for state management
-npm install vuex --save
+10. **(Optional) Add Vuex for State Management:**
+    ```bash
+    vue add vuex
+    ```
