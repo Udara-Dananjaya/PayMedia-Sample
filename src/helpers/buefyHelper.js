@@ -20,7 +20,7 @@ const BuefyHelper = {
             type: type,
         })
     },
-    showAlert(title, message,confirmText='OK') {
+    showAlert(title, message, confirmText = 'OK') {
         Dialog.alert({
             title: title,
             message: message,
