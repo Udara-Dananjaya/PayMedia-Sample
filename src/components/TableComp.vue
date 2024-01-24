@@ -5,7 +5,7 @@
 				:label="column.label" v-slot="props">
 
 				<span v-if="column.label != 'Image'"> {{ props.row[column.field] }}</span>
-				<img :src="`${props.row[column.field]}`" width="50px" height="50px" v-if="column.label == 'Image'">
+				<img :src="`${props.row[column.field]}`" width="50px" height="50px" v-if="column.label == 'Image' &&  props.row[column.field]!=null">
 
 				<span v-if="column.label == 'Action'">
 					<div class="buttons">
