@@ -47,3 +47,8 @@
     ```bash
     vue add vuex
     ```
+	
+	**InCase Update Your Vue Template
+	```bash
+	npm install vue-template-compiler@2.6.14
+	```
