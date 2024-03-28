@@ -1,0 +1,112 @@
+To create a new ASP.NET Core Web API project with Swagger API documentation enabled using the command line, you can use the .NET CLI. Follow these steps:
+
+1. Open a command prompt or terminal window.
+
+2. Navigate to the directory where you want to create your project.
+
+3. Use the following commands to create the project:
+
+```bash
+dotnet new webapi -n YourProjectName
+cd YourProjectName
+```
+
+Replace `YourProjectName` with the desired name for your project.
+
+4. Now, you need to add Swagger support to your project. You can do this by adding the Swashbuckle.AspNetCore NuGet package. Run the following command:
+
+```bash
+dotnet add package Swashbuckle.AspNetCore
+```
+
+5. Open the project in your favorite text editor or IDE. You can use Visual Studio Code or any other editor of your choice.
+
+6. In the `Startup.cs` file, add the following code inside the `ConfigureServices` method to enable Swagger:
+
+```csharp
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "YourProjectName API", Version = "v1" });
+});
+```
+
+Make sure to replace `YourProjectName` with the actual name of your project.
+
+7. Next, add the following code inside the `Configure` method in the same `Startup.cs` file:
+
+```csharp
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourProjectName API V1");
+});
+```
+
+8. Save the changes to the `Startup.cs` file.
+
+9. Now, go back to your command prompt or terminal window and run the following command to build and run your project:
+
+```bash
+dotnet run
+```
+
+Your ASP.NET Core Web API project with Swagger API documentation enabled will be created and running. You can access the Swagger UI by navigating to `https://localhost:<port>/swagger/index.html` in your web browser, where `<port>` is the port number your application is running on (usually 5001 or 5000 by default).
+
+To achieve the same task using the command line instead of Visual Studio's graphical interface, you can use the .NET CLI (Command Line Interface). Here's how you can do it step by step:
+
+1. **Open Command Prompt or Terminal**:
+   Open your command-line interface (CMD for Windows or Terminal for MacOS/Linux).
+
+2. **Create a new ASP.NET Core Web API project**:
+   Run the following command to create a new ASP.NET Core Web API project:
+
+   ```
+   dotnet new webapi -n YourProjectName
+   ```
+
+   Replace `YourProjectName` with the desired name for your project.
+
+3. **Navigate to the project directory**:
+   Use the `cd` command to navigate into the directory of your newly created project:
+
+   ```
+   cd YourProjectName
+   ```
+
+4. **Enable Swagger for API Documentation**:
+   By default, Swagger is not included in a new ASP.NET Core Web API project. To add Swagger support, you need to install the Swashbuckle.AspNetCore NuGet package. Run the following command:
+
+   ```
+   dotnet add package Swashbuckle.AspNetCore --version 6.2.3
+   ```
+
+5. **Configure Swagger**:
+   After installing the Swashbuckle.AspNetCore package, you need to configure Swagger in your project. Open the `Startup.cs` file in a text editor and add the following code inside the `ConfigureServices` method:
+
+   ```csharp
+   services.AddSwaggerGen(c =>
+   {
+       c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API Name", Version = "v1" });
+   });
+   ```
+
+   Also, add the following code inside the `Configure` method before the `app.UseEndpoints`:
+
+   ```csharp
+   app.UseSwagger();
+   app.UseSwaggerUI(c =>
+   {
+       c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API Name v1");
+   });
+   ```
+
+   Replace `"Your API Name"` with the desired name for your API.
+
+6. **Run the Project**:
+   Finally, run the project using the following command:
+
+   ```
+   dotnet run
+   ```
+
+   Your ASP.NET Core Web API project with Swagger documentation should now be running. You can access the Swagger UI by navigating to `https://localhost:5001/swagger` in your web browser.
