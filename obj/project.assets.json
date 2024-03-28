@@ -442,11 +442,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\budar\\Documents\\GitHub\\Internship-Sample\\Internship-Sample\\Internship-Sample.csproj",
+      "projectUniqueName": "C:\\Users\\budar\\Documents\\GitHub\\Internship-Sample\\Internship-Sample.csproj",
       "projectName": "Internship-Sample",
-      "projectPath": "C:\\Users\\budar\\Documents\\GitHub\\Internship-Sample\\Internship-Sample\\Internship-Sample.csproj",
+      "projectPath": "C:\\Users\\budar\\Documents\\GitHub\\Internship-Sample\\Internship-Sample.csproj",
       "packagesPath": "C:\\Users\\budar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\budar\\Documents\\GitHub\\Internship-Sample\\Internship-Sample\\obj\\",
+      "outputPath": "C:\\Users\\budar\\Documents\\GitHub\\Internship-Sample\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\budar\\AppData\\Roaming\\NuGet\\NuGet.Config"

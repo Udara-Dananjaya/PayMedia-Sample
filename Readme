@@ -110,3 +110,31 @@ To achieve the same task using the command line instead of Visual Studio's graph
    ```
 
    Your ASP.NET Core Web API project with Swagger documentation should now be running. You can access the Swagger UI by navigating to `https://localhost:5001/swagger` in your web browser.
+
+
+
+
+   To add these dependencies to your project using the command line, you can utilize the `dotnet add package` command for each dependency. Here's how you can do it:
+
+1. **Microsoft.EntityFrameworkCore**:
+   Run the following command to add the Microsoft.EntityFrameworkCore dependency to your project:
+
+   ```
+   dotnet add package Microsoft.EntityFrameworkCore
+   ```
+
+2. **Microsoft.EntityFrameworkCore.Design**:
+   Run the following command to add the Microsoft.EntityFrameworkCore.Design dependency to your project:
+
+   ```
+   dotnet add package Microsoft.EntityFrameworkCore.Design
+   ```
+
+3. **Pomelo.EntityFrameworkCore.MySql**:
+   Run the following command to add the Pomelo.EntityFrameworkCore.MySql dependency to your project:
+
+   ```
+   dotnet add package Pomelo.EntityFrameworkCore.MySql
+   ```
+
+These commands will add the specified dependencies to your ASP.NET Core Web API project. Make sure to run these commands in the root directory of your project. Once added, these packages will be included in your project and you can start using them for data access with Entity Framework Core and MySQL.
